@@ -3,16 +3,20 @@ const spinner = document.getElementById("spinner");
 const previus = document.getElementById("Previous");
 const next = document.getElementById("Next");
 
-const offset = 1;
-const limit = 17;
+let offset = 1;
+let limit = 17;
 
 previus.addEventListener("click", () => {
-  offset -= 18;
-  fetchPokemons(offset, limit);
+  if (offset != 1) {
+    offset -= 18;
+    removeChildNodes(cardContainer);
+    fetchPokemons(offset, limit);
+  }
 });
 
 next.addEventListener("click", () => {
   offset += 17;
+  removeChildNodes(cardContainer);
   fetchPokemons(offset, limit);
 });
 
@@ -72,5 +76,10 @@ function createCard(pokemon) {
   container.appendChild(info);
 
   cardContainer.appendChild(container);
+}
+function removeChildNodes(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
 }
 fetchPokemons(offset, limit);
